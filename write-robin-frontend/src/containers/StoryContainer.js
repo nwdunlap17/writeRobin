@@ -3,6 +3,7 @@ import Canon from '../components/Canon'
 import SubmissionContainer from './SubmissionContainer'
 import StorySocket from '../components/StorySocket'
 
+
 //Takes in storyID as a prop
 export default class StoryContainer extends Component {
     constructor(props){
@@ -11,11 +12,14 @@ export default class StoryContainer extends Component {
             story: null,
             loaded: false
         }
+        this.getInitialData()
     }
 
-    componentWillMount(){
+    getInitialData=()=>{
+        let path = window.location.pathname
+        let storyID = path.split('stories/')[1]
         console.log('brackend', this.props)
-        fetch(`${this.props.backendURL}/view-story/${this.props.storyId}`, {
+        fetch(`${this.props.backendURL}/view-story/${storyID}`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
@@ -36,6 +40,15 @@ export default class StoryContainer extends Component {
         this.setState({story: updatedStory})
     }
 
+    AddSubmissionFromSocket = newSubmission => {
+        
+        this.setState(prevState => {
+            prevState.story.submissions.push(newSubmission)
+            return {story: {...prevState.story, submissions: prevState.story.submissions }}
+        }
+        )
+    }
+
     render(){
         return(
         <div>
@@ -46,7 +59,14 @@ export default class StoryContainer extends Component {
                 {/* <VoteButtons/> */}
                 <h6>Pending</h6>
                 <SubmissionContainer backendURL={this.props.backendURL} story={this.state.story}/>
-                <StorySocket data-cableApp={this.props['data-cableApp']} updateStory={this.updateStoryFromSocket}/>
+                <StorySocket 
+                    backendURL={this.props.backendURL}
+                    storyID = {this.state.story.id}
+                    data-cableApp={this.props['data-cableApp']} 
+                    updateStory={this.updateStoryFromSocket} 
+                    addSubmission={this.AddSubmissionFromSocket}
+                    updateAudience={this.updateAudience}
+                />
             </div>                
             : null}
         </div>)

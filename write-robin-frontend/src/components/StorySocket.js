@@ -7,7 +7,18 @@ export default class StorySocket extends PureComponent{
         this.props['data-cableApp'].story = this.props['data-cableApp'].cable.subscriptions.create({channel: "StoryChannel", id: id},{
             received: (broadcast) => {
                 console.log('received broadcast',broadcast)
-                this.props.updateStory(broadcast.story)
+
+                switch (broadcast.message) {
+                    case 'submission':
+                        this.props.addSubmission(broadcast.submission)
+                    break;
+                    case 'audience':
+                        this.props.updateAudience(broadcast.count)
+                    break;
+                    
+                    default:
+                        this.props.updateStory(broadcast.story)
+                }
             }
         })
     }

@@ -12,7 +12,7 @@ export default class SubmissionContainer extends Component{
             return !submission.canon
         })
         return submissions.map(submission => {
-            return(<SubmissionView submission={submission}/>)
+            return(<SubmissionView submission={submission} backendURL={this.props.backendURL}/>)
         })
     }
 
@@ -32,6 +32,7 @@ export default class SubmissionContainer extends Component{
                 }
             })
         })
+        .then(()=>{this.setState({draft: ''})})
     }
 
     render(){

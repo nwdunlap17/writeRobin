@@ -5,7 +5,7 @@ class CreateSubmissions < ActiveRecord::Migration[6.0]
       t.string :user_id
       t.string :story_id
       t.integer :position
-      t.boolean :canon
+      t.boolean :canon, default: false
 
       t.timestamps
     end

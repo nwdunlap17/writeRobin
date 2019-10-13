@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 2019_10_07_222918) do
     t.string "user_id"
     t.integer "length", default: 20
     t.string "intro"
+    t.boolean "public", default: true
+    t.integer "round_unique_users", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -29,7 +31,7 @@ ActiveRecord::Schema.define(version: 2019_10_07_222918) do
     t.string "user_id"
     t.string "story_id"
     t.integer "position"
-    t.boolean "canon"
+    t.boolean "canon", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

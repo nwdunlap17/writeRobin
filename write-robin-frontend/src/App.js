@@ -6,6 +6,7 @@ import SignUpForm from './components/SignUpForm'
 import ConnectionTest from './components/ConnectionTest'
 import './App.css';
 import StoryContainer from './containers/StoryContainer';
+import HomeContainer from './containers/HomeContainer';
 
 class App extends Component{
     constructor(props){
@@ -58,20 +59,6 @@ class App extends Component{
         .then(resp => resp.json())
         .then(json => console.log('button'))
     }
-    
-    loadStory = () => {
-        let path = window.location.pathname
-        let number = path.split('stories/')[1]
-        console.log ('number',number)
-        return (<StoryContainer backendURL={this.props.backendURL} storyId={number} 
-                    data-cableApp={this.props.cableApp}
-                    //data-updateApp={this.updateAppStateStory}
-                    //data-storyData={this.state.storyData}
-                    //getStoryData={this.getStoryData}
-                    // storyData={this.state.story}
-                    // authData={this.state.auth}
-                    /> )
-    }
 
     render(){
         return (
@@ -87,9 +74,13 @@ class App extends Component{
                     <SignUpForm backendURL={this.props.backendURL}/>
                 </Route>
 
-                <Route path='/stories'>
+                <Route path='/stories/'>
                     <p>StoryContainer</p>
-                    {this.loadStory()}
+                    <StoryContainer backendURL={this.props.backendURL} data-cableApp={this.props.cableApp}/> 
+                </Route>
+
+                <Route path='/home'>
+                    <HomeContainer backendURL={this.props.backendURL}/>
                 </Route>
 
                 {/* <ConnectionTest

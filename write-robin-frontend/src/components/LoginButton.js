@@ -1,10 +1,17 @@
 import React, {Component} from 'react'
-
+import {Link} from 'react-router-dom'
 
 export default class LoginButton extends Component {
 
+    checkForLogin = () => {
+        if (localStorage.getItem('user')){
+            return (<p>{localStorage.getItem('user')}</p>)
+        } else {
+            return (<Link to={'/login'}>Login</Link>)
+        }
+    }
 
     render(){
-        return (<p>Login</p>)
+        return this.checkForLogin()
     }
 }
