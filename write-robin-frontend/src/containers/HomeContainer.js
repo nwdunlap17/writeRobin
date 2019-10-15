@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Redirect} from 'react-router-dom'
 import StoryCard from '../components/StoryCard'
 
 export default class HomeContainer extends Component{
@@ -6,7 +7,8 @@ export default class HomeContainer extends Component{
          super(props)
          this.state = {
              stories: [],
-             loaded: false
+             loaded: false,
+             toNewStory: false
          }
     }
 
@@ -22,14 +24,28 @@ export default class HomeContainer extends Component{
         })
     }
 
+    renderNewStoryButton = () => {
+        if (!localStorage.getItem('auth_token') || localStorage.getItem('auth_token') === 'null'){
+            return null
+        } 
+        if (!this.state.toNewStory){
+            return <button onClick={()=>{this.setState({toNewStory:true})}}>New Story</button>
+        }
+        if (this.state.toNewStory){
+            return <Redirect to='/new-story'/>
+        }
+    }
+
     render(){
         return(
 
             this.state.loaded? 
-
-            <ul>
-                {this.renderStoriesList()}
-            </ul>
+            <div>
+                {this.renderNewStoryButton()}
+                <ul>
+                    {this.renderStoriesList()}
+                </ul>
+            </div>
             : <p>Loading Stories</p> 
 
         )

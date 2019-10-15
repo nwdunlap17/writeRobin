@@ -1,4 +1,10 @@
 class SubmissionsController < ApplicationController
+    skip_before_action :authorized, only: :index
+    def index
+        @subs = Submission.all 
+        render json: @subs
+
+    end
 
     def create
         user = get_user_from_token

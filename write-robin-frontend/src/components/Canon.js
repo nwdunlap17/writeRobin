@@ -9,15 +9,22 @@ export default class Canon extends PureComponent {
         submissions = submissions.sort(function(a,b){
             return a.position - b.position
         })
+        debugger
         return submissions.map(submission => {
-            return(<p>{submission.content}</p>)
+            return(<div class='list-group-item canon'>
+                <div>{submission.content}</div>
+                <div class='addendum'>{submission.author}</div>
+            
+            </div>)
         })
     }
 
     render(){
         return(
-            <div>
-                {this.renderCanonSubmissions()}
+            <div class='card submission'>
+                <ul class='list-group list-group-flush'>
+                    {this.renderCanonSubmissions()}
+                </ul>
             </div>
         )
     }

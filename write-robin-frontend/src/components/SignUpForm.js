@@ -29,7 +29,12 @@ class SignUpForm extends Component{
                 }
             }) 
         })
-        .then()
+        .then(res => res.json())
+        .then(json => { 
+            localStorage.setItem('auth_token',json.token)
+            localStorage.setItem('user',json.username)
+            this.props.updateUsername(this.state.username)
+         })
     }
 
     render(){

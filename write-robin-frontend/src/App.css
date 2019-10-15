@@ -20,3 +20,32 @@
 .App-link {
   color: #09d3ac;
 }
+
+.navbar {
+  background-color: steelblue;
+
+}
+
+#Page-Body {
+  background-color: #DDEEFF;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+#Page-Content {
+  min-width: 50vw;
+  flex-shrink: 0;
+  max-width: 600px;
+}
+
+.canon {
+  background-color: #F8F8F8;
+  padding-bottom: 0;
+}
+.addendum {
+  /* background-color: #F8F8F8; */
+  color: #AAAAAA;
+  padding-bottom: 0;
+  text-align: right;
+}

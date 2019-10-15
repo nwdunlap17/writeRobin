@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
 
 class SignInForm extends Component{
-        constructor(){
-        super()
+        constructor(props){
+        super(props)
         this.state = {username: '', password: ''}
     }
 
@@ -32,11 +33,15 @@ class SignInForm extends Component{
         .then(json => {
             localStorage.setItem('auth_token',json.token)
             localStorage.setItem('user',json.username)
+            this.props.updateUserName(this.state.username)
         })
     }
 
     render(){
+
+        let redirect = (localStorage.getItem('auth_token') && localStorage.getItem('auth_token') !== 'null')? <Redirect to='/home'/> : null
         return (
+            <div>
             <form onSubmit={this.submitLogin}>
                 <p>UserNameBar</p>
                 <input type='text' value={this.state.username} onChange={this.updateUsername}></input>
@@ -44,6 +49,8 @@ class SignInForm extends Component{
                 <input type='password' value={this.state.password} onChange={this.updatePassword}></input>
                 <button type='submit'>Login</button>
             </form>
+            {redirect}
+            </div>
     )   }
 }
 
