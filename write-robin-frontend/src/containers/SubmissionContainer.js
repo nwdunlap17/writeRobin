@@ -12,7 +12,7 @@ export default class SubmissionContainer extends Component{
             return !submission.canon
         })
         return submissions.map(submission => {
-            return(<SubmissionView submission={submission} backendURL={this.props.backendURL}/>)
+            return(<SubmissionView submitVote={this.props.submitVote} submission={submission} backendURL={this.props.backendURL}/>)
         })
     }
 
@@ -38,7 +38,9 @@ export default class SubmissionContainer extends Component{
     render(){
         return (
             <div>
-                {this.renderPendingSubmissions()}
+                <ul class='pending-submission-list'>
+                    {this.renderPendingSubmissions()}
+                </ul>
                 <form onSubmit={this.addSubmission}>
                     <input type='text-area' value={this.state.draft} onChange={event => this.setState({draft: event.target.value})}/>
                     <input type='submit'/>

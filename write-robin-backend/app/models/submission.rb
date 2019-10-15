@@ -23,4 +23,17 @@ class Submission < ApplicationRecord
         end
         return nil
     end
+
+    def find_user_vote(userID)
+        vote = self.votes.find_by(user_id: userID)
+        if (vote == nil)
+            return 0
+        else
+            if (vote.positive)
+                return 1
+            else
+                return -1
+            end
+        end
+    end
 end

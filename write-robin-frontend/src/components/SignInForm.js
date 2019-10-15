@@ -43,9 +43,9 @@ class SignInForm extends Component{
         return (
             <div>
             <form onSubmit={this.submitLogin}>
-                <p>UserNameBar</p>
+                <p>Username:</p>
                 <input type='text' value={this.state.username} onChange={this.updateUsername}></input>
-                <p>PasswordBar</p>
+                <p>Password:</p>
                 <input type='password' value={this.state.password} onChange={this.updatePassword}></input>
                 <button type='submit'>Login</button>
             </form>

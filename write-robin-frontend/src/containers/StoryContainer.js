@@ -49,16 +49,40 @@ export default class StoryContainer extends Component {
         )
     }
 
+    submitVote = (submissionID, rating) => {
+        fetch(`${this.props.backendURL}/submission-vote`,{
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                value: rating,
+                submission_id: submissionID
+            })
+        })
+        this.setState(prevState => {
+            let newSubs = prevState.story.submissions.map(sub => {
+                if (sub.id === submissionID){
+                    sub.vote = rating
+                }
+                return sub
+            })
+            return {story: {...prevState.story, submissions: newSubs}}
+        })
+    }
+
     render(){
         return(
         <div>
 
             {this.state.loaded? <div>
                 <h3>{this.state.story.title}</h3>
-                <Canon story={this.state.story}/>
+                <Canon story={this.state.story} submitVote={this.submitVote}/>
                 {/* <VoteButtons/> */}
                 <h6>Pending</h6>
-                <SubmissionContainer backendURL={this.props.backendURL} story={this.state.story}/>
+                <SubmissionContainer backendURL={this.props.backendURL} story={this.state.story} submitVote={this.submitVote}/>
                 <StorySocket 
                     backendURL={this.props.backendURL}
                     storyID = {this.state.story.id}

@@ -8,8 +8,8 @@ class StoriesController < ApplicationController
     end
 
     def public_index
-        @stories = Story.where('PUBLIC = true')
-        render json: @stories#, each_serializer: GroupStorySerializer
+        @story = Story.where('PUBLIC = true')
+        render json: @story, each_serializer: GroupStorySerializer
     end
 
     def create
@@ -30,12 +30,14 @@ class StoriesController < ApplicationController
         @story = Story.find(params[:id])
 
         user = get_user_from_token
+        # byebug
+
         # For private stories, check for access here
         
         entry = ActiveModel::SerializableResource.new(@story)
         
         # @story.new_viewer(1)
-        render json: @story
+        render json: @story, user_id: user
     end
 
     def append

@@ -2,27 +2,28 @@ import React, {Component} from 'react'
 
 export default class SubmissionView extends Component{
 
-    submitVote = event => {
-        fetch(`${this.props.backendURL}/submission-vote`,{
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                value: event.target.getAttribute('rating'),
-                submission_id: this.props.submission.id
-            })
-        })
+
+    renderVoteButtons = (submission) => {
+        let plus = <p class='vote-button' onClick={() => this.props.submitVote(submission.id,1)}>+</p>
+        let minus = <p class='vote-button' onClick={() => this.props.submitVote(submission.id,-1)}>-</p>
+        if (submission.vote === 1){
+            plus = <p class='vote-button black' onClick={() => this.props.submitVote(submission.id,0)}>+</p>
+        } else if (submission.vote === -1){
+            minus = <p class='vote-button black' onClick={() => this.props.submitVote(submission.id,0)}>-</p>
+        }
+        return <div class='vote-button'>{plus} {minus}</div>
     }
 
     render(){
         return (
-        <li>
-            {this.props.submission.content}
-            <button rating={1} onClick={this.submitVote}> + </button>
-            <button rating={-1} onClick={this.submitVote}> - </button>
-        </li>)
+            <li class='submssion-list-item'>
+            <div class='card submission list-group-item'>
+                <div>{this.props.submission.content}</div>
+                <div class='addendum'>
+                    {this.props.submission.author} {this.renderVoteButtons(this.props.submission)}
+                </div>
+            </div>
+            </li>
+        )
     }
 }

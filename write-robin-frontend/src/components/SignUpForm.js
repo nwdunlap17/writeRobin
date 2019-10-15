@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class SignUpForm extends Component{
         constructor(){
         super()
-        this.state = {username: '', password: ''}
+        this.state = {username: '', password: '', password2: ''}
     }
 
     updateUsername = event => {
@@ -13,9 +13,16 @@ class SignUpForm extends Component{
     updatePassword = event => {
         this.setState({password: event.target.value})
     }
+    updatePassword2 = event => {
+        this.setState({password2: event.target.value})
+    }
     
     submitLogin = event => {
         event.preventDefault()
+        if (this.state.password !== this.state.password2){
+            window.alert('Passwords must match.');
+            return
+        }
         fetch(`${this.props.backendURL}/users`,{
             method: "POST",
             headers:{
@@ -33,18 +40,20 @@ class SignUpForm extends Component{
         .then(json => { 
             localStorage.setItem('auth_token',json.token)
             localStorage.setItem('user',json.username)
-            this.props.updateUsername(this.state.username)
+            this.props.updateUserName(this.state.username)
          })
     }
 
     render(){
         return (
             <form onSubmit={this.submitLogin}>
-                <p>UserNameBar</p>
+                <p>Username:</p>
                 <input type='text' value={this.state.username} onChange={this.updateUsername}></input>
-                <p>PasswordBar</p>
+                <p>Password:</p>
                 <input type='password' value={this.state.password} onChange={this.updatePassword}></input>
-                <button type='submit'>Login</button>
+                <p>Confirm Password:</p>
+                <input type='password' value={this.state.password2} onChange={this.updatePassword2}></input>
+                <button type='submit'>Sign Up</button>
             </form>
     )   }
 }

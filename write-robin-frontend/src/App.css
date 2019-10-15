@@ -39,7 +39,7 @@
   max-width: 600px;
 }
 
-.canon {
+.submission {
   background-color: #F8F8F8;
   padding-bottom: 0;
 }
@@ -48,4 +48,23 @@
   color: #AAAAAA;
   padding-bottom: 0;
   text-align: right;
+  white-space: nowrap;
+}
+
+.vote-button {
+  display: inline;
+  min-width: 10px;
+}
+
+.black {
+  color: #000000;
+}
+
+.pending-submission-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.submssion-list-item {
+  margin-bottom: 20px;
 }
