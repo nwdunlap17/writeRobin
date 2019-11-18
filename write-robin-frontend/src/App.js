@@ -8,6 +8,8 @@ import './App.css';
 import StoryContainer from './containers/StoryContainer';
 import HomeContainer from './containers/HomeContainer';
 import NewStoryContainer from './containers/NewStoryContainer';
+import LoadingIndicator from './components/LoadingIndicator'
+
 
 class App extends Component{
     constructor(props){
